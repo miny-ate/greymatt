@@ -707,3 +707,150 @@
   <script src="js/main.js"></script>
 </body>
 </html>
+
+<!-- ═══════════════════════════════════════════════════════
+  GREYMATT — HTML SNIPPETS FOR FIREBASE UPGRADE
+  ═══════════════════════════════════════════════════════ -->
+
+
+<!-- ────────────────────────────────────────────────────────
+  SNIPPET 1: Add these 2 lines inside <head> tag
+  (after your existing Google Fonts link)
+──────────────────────────────────────────────────────────── -->
+
+<link rel="stylesheet" href="css/admin.css" />
+
+
+<!-- ────────────────────────────────────────────────────────
+  SNIPPET 2: Replace the existing <script src="js/main.js">
+  at the bottom of <body> with ALL of this block.
+  
+  ⚠️ IMPORTANT: Replace the Firebase config values below
+  with YOUR OWN from the Firebase console.
+  See the README_FIREBASE.md for setup instructions.
+──────────────────────────────────────────────────────────── -->
+
+<!-- Firebase SDK (v9 compat mode — works like a normal script) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+  // ── YOUR FIREBASE CONFIG ──────────────────────────────────
+  // Replace ALL values below with your own from Firebase Console
+  const firebaseConfig = {
+    apiKey:            "YOUR_API_KEY",
+    authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId:         "YOUR_PROJECT_ID",
+    storageBucket:     "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId:             "YOUR_APP_ID"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const firestore = firebase.firestore();
+
+  // Expose to main.js using compat API
+  window._greyDB = firestore;
+  window.firestoreApi = {
+    collection:      (db, path)      => db.collection(path),
+    addDoc:          (ref, data)     => ref.add(data),
+    doc:             (db, path, id)  => db.collection(path).doc(id),
+    getDoc:          (ref)           => ref.get().then(snap => ({ exists: () => snap.exists, data: () => snap.data(), id: snap.id })),
+    updateDoc:       (ref, data)     => ref.update(data),
+    deleteDoc:       (ref)           => ref.delete(),
+    onSnapshot:      (ref, cb, err)  => ref.onSnapshot(snap => cb({ docs: snap.docs.map(d => ({ id: d.id, data: () => d.data() })) }), err),
+    orderBy:         (field, dir)    => ({ _field: field, _dir: dir }),
+    query:           (ref, ...args)  => {
+      let q = ref;
+      args.forEach(a => { if (a._field) q = q.orderBy(a._field, a._dir || 'asc'); });
+      return q;
+    },
+    serverTimestamp: () => firebase.firestore.FieldValue.serverTimestamp()
+  };
+
+  // Start Firebase listener
+  window.addEventListener('load', () => initFirebase());
+</script>
+
+<script src="js/main.js"></script>
+
+
+<!-- ────────────────────────────────────────────────────────
+  SNIPPET 3: Admin toggle button + Admin Panel section
+  Paste this right before </body>
+──────────────────────────────────────────────────────────── -->
+
+<!-- Floating Admin Button -->
+<button class="admin-toggle-btn" onclick="toggleAdminPanel()" title="Admin Panel">⚙️</button>
+
+<!-- Admin Panel -->
+<section id="adminPanel">
+  <h2>⚙️ Admin Panel</h2>
+  <p class="admin-subtitle">Products added here appear live on all devices instantly.</p>
+
+  <!-- Login -->
+  <div id="adminLoginBox">
+    <p>Enter your admin password to manage products:</p>
+    <input type="password" id="adminPasswordInput" placeholder="Admin password"
+           onkeydown="if(event.key==='Enter') adminLogin()">
+    <button class="btn-primary" onclick="adminLogin()">Login →</button>
+  </div>
+
+  <!-- Logged In Bar -->
+  <div id="adminLoggedIn" style="display:none">
+    <span>✅ Logged in as Admin</span>
+    <button class="logout-btn" onclick="adminLogout()">Logout</button>
+  </div>
+
+  <!-- Add/Edit Product Form -->
+  <div id="adminFormBox" style="display:none">
+    <h3>ADD / EDIT PRODUCT</h3>
+    <form id="adminProductForm">
+      <div class="admin-form-grid">
+
+        <div class="form-group">
+          <label>Product Name *</label>
+          <input type="text" id="ap-name" placeholder="e.g. Casio G-Shock" required>
+        </div>
+
+        <div class="form-group">
+          <label>Price (KSh) *</label>
+          <input type="number" id="ap-price" placeholder="e.g. 3500" required>
+        </div>
+
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="ap-category" required>
+            <option value="">-- Select Category --</option>
+            <option value="watches">Watches</option>
+            <option value="shoes">Shoes</option>
+            <option value="electrical">Electrical Appliances</option>
+            <option value="clothing">Clothing</option>
+            <option value="stationery">Stationery</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Image URL</label>
+          <input type="text" id="ap-image"
+            placeholder="https://... or images/watches/watch5.jpg">
+        </div>
+
+        <div class="form-group full-width">
+          <label>Description</label>
+          <textarea id="ap-desc" rows="2"
+            placeholder="Short product description (optional)"></textarea>
+        </div>
+
+        <div class="form-group full-width">
+          <button type="submit" id="ap-submit" class="submit-btn">
+            Add Product →
+          </button>
+        </div>
+
+      </div>
+    </form>
+    <div id="adminStatus" class="admin-status"></div>
+  </div>
+</section>

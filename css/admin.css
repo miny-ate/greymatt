@@ -1,0 +1,179 @@
+/* ─── PASTE THIS AT THE BOTTOM OF css/style.css ──────────── */
+
+/* ─── ADMIN TOGGLE BUTTON ────────────────────────────────── */
+.admin-toggle-btn {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 4px 20px rgba(200,169,110,0.4);
+  transition: var(--transition);
+}
+.admin-toggle-btn:hover { transform: scale(1.1); }
+
+/* ─── ADMIN PANEL ────────────────────────────────────────── */
+#adminPanel {
+  display: none;
+  background: var(--dark2);
+  border-top: 3px solid var(--gold);
+  padding: 4rem 5%;
+}
+
+#adminPanel h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 4px;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+#adminPanel .admin-subtitle {
+  color: var(--white-dim);
+  font-size: 0.85rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+/* ─── LOGIN BOX ──────────────────────────────────────────── */
+#adminLoginBox {
+  max-width: 420px;
+}
+
+#adminLoginBox p {
+  color: var(--white-dim);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+#adminLoginBox input {
+  background: var(--grey);
+  border: 1px solid var(--grey2);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  color: var(--white);
+  font-size: 0.9rem;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  outline: none;
+  font-family: var(--font-body);
+  transition: border-color var(--transition);
+}
+
+#adminLoginBox input:focus { border-color: var(--gold); }
+
+/* ─── LOGGED IN BAR ──────────────────────────────────────── */
+#adminLoggedIn {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 0.75rem 1rem;
+  background: rgba(200,169,110,0.08);
+  border: 1px solid rgba(200,169,110,0.2);
+  border-radius: var(--radius);
+  max-width: 500px;
+}
+
+#adminLoggedIn span { color: var(--gold); font-weight: 600; font-size: 0.9rem; }
+
+.logout-btn {
+  background: transparent;
+  border: 1px solid #ff6e6e;
+  color: #ff6e6e;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.78rem;
+  transition: var(--transition);
+  font-family: var(--font-body);
+  letter-spacing: 1px;
+}
+.logout-btn:hover { background: #ff6e6e; color: var(--black); }
+
+/* ─── ADD PRODUCT FORM ───────────────────────────────────── */
+#adminFormBox { display: none; }
+
+#adminFormBox h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 3px;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  max-width: 750px;
+}
+
+.admin-form-grid .form-group.full-width { grid-column: 1 / -1; }
+
+/* ─── STATUS MESSAGE ─────────────────────────────────────── */
+.admin-status {
+  display: none;
+  padding: 0.75rem 1.2rem;
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  margin-top: 1rem;
+  max-width: 750px;
+  font-weight: 500;
+}
+
+.admin-status.success {
+  background: rgba(0,200,100,0.1);
+  border: 1px solid rgba(0,200,100,0.3);
+  color: #00c864;
+}
+
+.admin-status.error {
+  background: rgba(255,110,110,0.1);
+  border: 1px solid rgba(255,110,110,0.3);
+  color: #ff6e6e;
+}
+
+/* ─── PRODUCT CARD ADMIN CONTROLS ────────────────────────── */
+.admin-card-controls {
+  position: absolute; top: 8px; right: 8px;
+  display: flex; gap: 6px;
+  opacity: 0;
+  transition: var(--transition);
+  z-index: 10;
+}
+
+.firebase-product-card:hover .admin-card-controls { opacity: 1; }
+
+.admin-card-controls button {
+  background: rgba(0,0,0,0.8);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 6px;
+  padding: 5px 9px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  color: white;
+}
+
+.admin-card-controls button:hover { background: var(--gold); color: var(--black); }
+
+/* ─── FIREBASE LOADING INDICATOR ─────────────────────────── */
+.firebase-loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--white-dim);
+  font-size: 0.85rem;
+  font-style: italic;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+  .admin-form-grid { grid-template-columns: 1fr; }
+  #adminLoggedIn { flex-wrap: wrap; }
+}

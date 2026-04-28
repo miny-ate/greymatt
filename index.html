@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css" />
 </head>
 <body>
 
@@ -704,46 +705,19 @@
     </div>
   </div>
 
-  <script src="js/main.js"></script>
-</body>
-</html>
-
-<!-- ═══════════════════════════════════════════════════════
-  GREYMATT — HTML SNIPPETS FOR FIREBASE UPGRADE
-  ═══════════════════════════════════════════════════════ -->
-
-
-<!-- ────────────────────────────────────────────────────────
-  SNIPPET 1: Add these 2 lines inside <head> tag
-  (after your existing Google Fonts link)
-──────────────────────────────────────────────────────────── -->
-
-<link rel="stylesheet" href="css/admin.css" />
-
-
-<!-- ────────────────────────────────────────────────────────
-  SNIPPET 2: Replace the existing <script src="js/main.js">
-  at the bottom of <body> with ALL of this block.
-  
-  ⚠️ IMPORTANT: Replace the Firebase config values below
-  with YOUR OWN from the Firebase console.
-  See the README_FIREBASE.md for setup instructions.
-──────────────────────────────────────────────────────────── -->
-
-<!-- Firebase SDK (v9 compat mode — works like a normal script) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
   // ── YOUR FIREBASE CONFIG ──────────────────────────────────
   // Replace ALL values below with your own from Firebase Console
   const firebaseConfig = {
-    apiKey:            "YOUR_API_KEY",
-    authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId:         "YOUR_PROJECT_ID",
-    storageBucket:     "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId:             "YOUR_APP_ID"
+    apiKey:            "AIzaSyAP5daYQg1vRx_E6c-tNHtvlhCJe9_TkDQ",
+    authDomain:        "greymatt-aa4a6.firebaseapp.com",
+    projectId:         "greymatt-aa4a6",
+    storageBucket:     "greymatt-aa4a6.firebasestorage.app",
+    messagingSenderId: "1002146603537",
+    appId:             "1:1002146603537:web:269d03fbed84c9aff687b0"
   };
 
   // Initialize Firebase
@@ -774,15 +748,7 @@
 </script>
 
 <script src="js/main.js"></script>
-
-
-<!-- ────────────────────────────────────────────────────────
-  SNIPPET 3: Admin toggle button + Admin Panel section
-  Paste this right before </body>
-──────────────────────────────────────────────────────────── -->
-
-<!-- Floating Admin Button -->
-<button class="admin-toggle-btn" onclick="toggleAdminPanel()" title="Admin Panel">⚙️</button>
+  <button class="admin-toggle-btn" onclick="toggleAdminPanel()" title="Admin Panel">⚙️</button>
 
 <!-- Admin Panel -->
 <section id="adminPanel">
@@ -854,3 +820,5 @@
     <div id="adminStatus" class="admin-status"></div>
   </div>
 </section>
+</body>
+</html>

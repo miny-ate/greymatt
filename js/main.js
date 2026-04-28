@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════════════════ */
 
 const PHONE         = '254725462559';
-const ADMIN_PASSWORD = 'greymatt2025'; // 🔒 Change this!
+const ADMIN_PASSWORD = '********'; // 
 
 // ─── NAVBAR SCROLL ─────────────────────────────────────────
 window.addEventListener('scroll', () => {
